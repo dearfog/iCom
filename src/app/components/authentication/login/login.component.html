@@ -1,0 +1,39 @@
+<div class="page-content page-main container-fluid accent-bg">
+    <div class="row h-100 justify-content-center align-items-center" >
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>title</mat-card-title>
+                <mat-card-subtitle>subtitle</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row container">
+                    <div class="title">
+                        Verify your phone.
+                    </div>
+                    <div class="col-md-12">
+                            <mat-form-field>
+                                <input matInput type="number" [ngModel]="phone_number" placeholder="e.g 1234567890" required>
+                            </mat-form-field>
+                        <form *ngIf="confirmationResult">
+                            <mat-form-field>
+                                <input matInput type="text" name="code" [ngModel]="code" placeholder="Enter Verify Code" required>
+                            </mat-form-field>
+                        </form>
+                        
+                    </div>
+                    <div class="row">
+                            <div id="recaptcha-container"></div>
+                    </div>
+                </div>                
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color='accent' (click)="onSubmit()" [disabled]="!phone_number" *ngIf='!confirmationResult'>
+                    Get OTP                    
+                </button>
+                <button mat-raised-button color='accent' (click)="verify(code,phone_number)" *ngIf='confirmationResult'>
+                    Verify OTP                    
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

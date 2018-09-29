@@ -1,1 +1,74 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/purple-green.css";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }
+@import '~@angular/material/theming';
+@include mat-core();
+
+
+$alt-primary: mat-palette($mat-yellow);
+$alt-accent:  mat-palette($mat-grey, 200);
+
+$alt-theme: mat-dark-theme($alt-primary, $alt-accent);
+
+@include angular-material-theme($alt-theme);
+@include mat-button-theme($alt-theme);
+
+.primary-bg {
+    background-color: mat-color($alt-primary);
+}
+.accent-bg {
+    background-color: mat-color($alt-accent);
+}
+
+// html,
+// body {
+//   height: 100%
+// }
+
+// mat-card-content.mat-card-content {
+//     margin: 0 8px;
+// }
+
+// // .mat-drawer-content {
+// //     min-height: 100vh;
+// // }
+// .m-h-vh-90 {
+//     min-height: 90vh;
+// }
+// .overflow-hidden
+// mat-card.overflow-hidden{
+//     overflow: hidden !important;
+// }
+.page-content.container-fluid {
+    height: 100%;
+}
+.mat-list .mat-list-item img.mat-list-icon {
+    width: 40px;
+    height: 40px;
+}
+
+*::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 4px #939393;
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar
+{
+	width: 7px;
+	background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 4px #939393;
+	background-color: #555;
+}
+
+.page-content.container-fluid {
+    margin-right: 0px;
+    padding-right: 0;
+}
