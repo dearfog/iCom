@@ -12,26 +12,26 @@
                     </div>
                     <div class="col-md-12">
                             <mat-form-field>
-                                <input matInput type="number" [ngModel]="phone_number" placeholder="e.g 1234567890" required>
+                                <input matInput type="number" [(ngModel)]="phone_number" placeholder="e.g 1234567890" required>
                             </mat-form-field>
                         <form *ngIf="confirmationResult">
                             <mat-form-field>
-                                <input matInput type="text" name="code" [ngModel]="code" placeholder="Enter Verify Code" required>
+                                <input matInput type="text" name="code" [(ngModel)]="code" placeholder="Enter Verify Code" required>
                             </mat-form-field>
                         </form>
-                        
+
                     </div>
                     <div class="row">
                             <div id="recaptcha-container"></div>
                     </div>
-                </div>                
+                </div>
             </mat-card-content>
             <mat-card-actions>
                 <button mat-raised-button color='accent' (click)="onSubmit()" [disabled]="!phone_number" *ngIf='!confirmationResult'>
-                    Get OTP                    
+                    Get OTP
                 </button>
                 <button mat-raised-button color='accent' (click)="verify(code,phone_number)" *ngIf='confirmationResult'>
-                    Verify OTP                    
+                    Verify OTP
                 </button>
             </mat-card-actions>
         </mat-card>

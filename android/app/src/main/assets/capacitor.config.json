@@ -1,0 +1,6 @@
+{
+  "appId": "com.nasiruddin.icom",
+  "appName": "iCom",
+  "bundledWebRuntime": false,
+  "webDir": "dist/iCom"
+}

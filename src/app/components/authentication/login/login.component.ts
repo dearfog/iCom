@@ -5,6 +5,8 @@ import { CryptographerService } from '../../../shared/cryptographer.service';
 import { CookiesService } from '../../../shared/cookies.service';
 import { Router } from '@angular/router';
 
+declare var grecaptcha:any
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -15,7 +17,7 @@ export class LoginComponent implements OnInit {
     public recaptchaVerifier: firebase.auth.RecaptchaVerifier;
     public sent: boolean;
     public loading: boolean;
-    private confirmationResult: any;
+    public confirmationResult: any;
     public phone_number:Number;
     public code : String;
     constructor(
@@ -30,14 +32,24 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+        this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container',{
+          'size': 'invisible',
+          'callback': function(response) {
+            // reCAPTCHA solved, allow signInWithPhoneNumber.
+            this.onSubmit();
+          }
+        });
+        this.recaptchaVerifier.render().then(function(widgetId) {
+          console.log(widgetId);
+          grecaptcha.reset(widgetId);
+        });
+        // firebase.auth().signInWithPhoneNumber(`+91 `, this.recaptchaVerifier)
     }
 
     onSubmit() {
-        const appVerifier = this.recaptchaVerifier;
         const phoneNumberString = this.phone_number.toString();
         this.loading = true;
-        firebase.auth().signInWithPhoneNumber(`+91 ${phoneNumberString}`, appVerifier)
+        firebase.auth().signInWithPhoneNumber(`+91 ${phoneNumberString}`, this.recaptchaVerifier)
             .then((confirmationResult) => {
                 this.sent = true;
                 this.confirmationResult = confirmationResult;
@@ -52,11 +64,13 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.confirmationResult.confirm(verification).then((good) => {
             // all checks out
-            localStorage.setItem(this.encoderService.encode('token'),JSON.stringify(good));
-            this.cookiesService.setCookie(this.encoderService.encode('phoneNumber'),this.encoderService.encode(phone_number.toString()),10);
+            localStorage.setItem('token',JSON.stringify(good));
+            this.cookiesService.setCookie('phoneNumber',this.encoderService.encode(phone_number.toString()),10);
             this.confirmationResult = false;
             this.loading = false;
-            this.router.navigate(['/chat']);
+            setTimeout(() => {
+              this.router.navigate(['/chat']);
+            }, 1500);
         }).catch((bad) => {
             // code verification was bad.
             console.log(bad);

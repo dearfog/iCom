@@ -20,10 +20,8 @@ export class LoginGuard implements CanActivate {
         state: RouterStateSnapshot
     ): Observable<boolean> | Promise<boolean> | boolean {
         // return true;
-        var cred = JSON.parse(localStorage.getItem(this.decoder.decode('token')));
-        var cookie = this.cookiesService.getCookie(this.decoder.decode('phoneNumber'));
-        console.log(cred, cookie);
-        
+        var cred = JSON.parse(localStorage.getItem('token'));
+        var cookie = this.cookiesService.getCookie('phoneNumber');
         if (!cred && !cookie ) {
             this.router.navigate(['/login']);
             return false;
